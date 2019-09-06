@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/bcbb5e63ec.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Spotify Help</title>
+</head>
+<style>
+  * {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: auto;
+  }
+
+  .topBar {
+    width: 100%;
+
+    background: #000000;
+    height: 8vh;
+    z-index: 3;
+  }
+
+  .logo {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 10px;
+    padding-left: 0px;
+    margin-left: 0px;
+    padding-left: 0px;
+    text-align: center;
+
+  }
+
+  .fa-spotify {
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 0px;
+    display: inline-block;
+    margin-bottom: 2px;
+    margin-left: 4.5em
+  }
+
+  .dash {
+    position: relative;
+    background: #ffffff;
+    height: 2px;
+    width: 18px;
+    float: left;
+  }
+
+  #dash {
+    padding: 10px;
+  }
+
+  .overlay {
+    position: fixed;
+    height: 100%;
+    right: 0px;
+    top: 0px;
+    overflow-x: hidden;
+    background: #000000;
+    width: 0px;
+    z-index: 3;
+    transition: width .3s ease-in-out;
+  }
+
+  .main-menu a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 1.5rem;
+  }
+
+  .main-menu a:hover {
+    color: hsl(147, 97%, 47%);
+  }
+
+  #Open {
+    float: right;
+  }
+
+  #close {
+    float: right;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 1.5rem;
+    color: #ffffff;
+    padding: 20px;
+  }
+
+  .icon {
+    padding: 20px;
+    float: right;
+    cursor: pointer;
+    z-index: 5;
+    margin-right: 6em
+  }
+
+  .icon .menu-icon {
+    height: 2px;
+    width: 18px;
+    background: #ffffff;
+    float: right;
+    position: relative;
+    z-index: 5;
+    transition: background .2s ease-in-out;
+
+
+  }
+
+  .icon .menu-icon::before {
+    height: 2px;
+    content: " ";
+    width: 18px;
+    background: #ffffff;
+    float: right;
+    position: absolute;
+    top: 5px;
+    transition: all .2s ease-in-out;
+
+  }
+
+  .icon .menu-icon::after {
+    height: 2px;
+    content: " ";
+    width: 18px;
+    background: #ffffff;
+    float: right;
+    position: absolute;
+    top: -5px;
+    transition: all .2s ease-in-out;
+  }
+
+  #menu-btn {
+    display: none;
+  }
+
+  #menu-btn:checked~.icon #menu-icon {
+    background: transparent;
+  }
+
+  #menu-btn:checked~.icon #menu-icon::before {
+    transform: rotate(45deg);
+    top: 0px;
+  }
+
+  #menu-btn:checked~.icon #menu-icon::after {
+    transform: rotate(-45deg);
+    top: 0px;
+  }
+
+  .overlay .main-menu .small {
+    font-weight: normal;
+    font-size: 1rem;
+
+  }
+
+  .showcase {
+
+    position: relative;
+    height: 100%;
+    width: 100%;
+    color: #ffffff;
+    margin-bottom: 5em;
+
+  }
+
+  .showcase-wrap {
+    margin: auto;
+    padding: 30px;
+    padding-top: 70px;
+  }
+
+  .showcase .showcase-bg-img {
+    background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://res.cloudinary.com/hng-pre-internship/image/upload/v1567738280/spotify/animal-background-ball-1383813_zkk9rt.jpg);
+    position: absolute;
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 450px;
+
+    z-index: -5;
+  }
+
+  .showcase h3 {
+    text-align: center;
+
+  }
+
+  .showcase ul {
+
+    list-style: none;
+
+
+  }
+
+  .showcase ul a {
+    text-decoration: none;
+    color: #ffffff;
+
+
+  }
+
+  .showcase ul li {
+    padding-bottom: 20px;
+
+
+  }
+
+  #search {
+
+    display: block;
+    margin: auto;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    border-radius: 15px 15px 15px 15px;
+    padding: 5px 10px;
+    width: 100%;
+  }
+
+  /*section-b*/
+  .section-b {
+    display: grid;
+    position: relative;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 10px;
+    background: rgb(252, 247, 247);
+
+  }
+
+  .section-b a {
+    display: block;
+    text-decoration: none;
+    line-height: 2em;
+    font-size: 15px;
+    color: blue;
+
+  }
+
+  .box {
+    padding: 20px;
+    margin: auto;
+  }
+
+  .box a:last-child {
+    text-decoration: underline;
+    color: #000000;
+    font-size: .9rem;
+  }
+
+  /*Section-c1*/
+  .section-c1 {
+    text-align: center;
+    padding: 50px;
+  }
+
+  .section-c1 p {
+    line-height: 2em;
+    padding: 20px;
+  }
+
+  .section-c1 button {
+    background: rgb(3, 3, 83);
+    padding: 0.5em;
+    color: #ffffff;
+    border-radius: 30px 30px 30px 30px;
+    width: 10rem;
+    font-size: 0.7rem;
+  }
+
+  /*section-d*/
+  .section-d {
+    background: #fa0303;
+  }
+
+  .section-d h2 {
+    text-align: center;
+    color: #ffffff;
+  }
+
+  .section-d-grid {
+    display: grid;
+    position: relative;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    margin: auto;
+    color: #ffffff;
+    line-height: 2rem;
+
+
+  }
+
+  .section-d-grid .min-card {
+    padding: 30px;
+    margin: auto;
+    width: 100%;
+
+
+  }
+
+  .section-d-a p:first-child,
+  .section-d-b p:first-child {
+    margin-left: 2.5em;
+    padding-top: 30px;
+
+
+  }
+
+  .section-d-grid p {
+    font-size: 14px;
+
+
+  }
+
+  .section-d a {
+    color: #ffffff;
+    font-size: 10px;
+  }
+
+  .section-d-grid hr {
+    margin-left: 27px;
+    width: 95%;
+
+
+  }
+
+
+  /*section-c*/
+  .section-c {
+    margin: 0px;
+    background: #000000;
+    height: 100%;
+    width: 100%;
+
+  }
+
+  .section-c-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+    justify-content: left;
+  }
+
+  .section-c ul {
+    display: absolute;
+    width: 100%;
+    padding-left: 0px;
+    list-style: none;
+    margin: 20px;
+
+
+
+
+  }
+
+  .section-c ul a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+
+  }
+
+  .section-c ul a:hover {
+    color: rgb(0, 255, 0);
+  }
+
+  .section-c-logo {
+    display: block;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 10px;
+    margin-left: 10px;
+
+  }
+
+  .section-c-grid h5 {
+    margin-left: 30px;
+    color: #ccccbb83;
+    width: 100%;
+
+  }
+
+  /*section e*/
+  .section-e,
+  .section-f {
+    width: 100%;
+    margin: auto;
+    align-content: center;
+    padding-top: 3em;
+    padding-bottom: 3em;
+  }
+
+  .section-e .card-slide {
+    text-align: center
+  }
+
+  .section-e .card-slide h1,
+  .section-f h1 {
+    margin-bottom: 1em;
+    font-size: 1.5rem;
+    text-align: center;
+  }
+
+  .section-e .card-slide p,
+  .section-f p {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .section-e .watch-video,
+  .sect-f-btn {
+    font-size: 0.5rem;
+    font-weight: bold;
+    letter-spacing: 1.5px;
+    border-radius: 30px 30px 30px 30px;
+    padding: 4px;
+    border-style: none;
+    border: #000000 1.5px solid;
+    width: 20em;
+    background: #ffffff;
+    margin-top: 1em;
+
+  }
+
+  .section-e {
+
+    position: relative;
+    height: 50vh;
+    margin-bottom: 0px;
+    width: 50%;
+
+  }
+
+  .section-e .slide-control {
+    margin-top: 2em;
+    text-align: center;
+  }
+
+  .card-slide {
+    height: 100%;
+    text-align: center;
+    display: none;
+
+  }
+
+  /*next and prev buttons*/
+  .prev,
+  .next {
+    position: relative;
+    bottom: -1.2px;
+  }
+
+  .prev {
+    right: 40px;
+
+  }
+
+  .next {
+    left: 40px;
+
+
+  }
+
+
+  .section-e #prevBtn,
+  .section-e #nextBtn {
+    border: none;
+    background: #fff;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  .section-e .slide-control .dot {
+    margin-left: 2px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #bbb;
+    display: inline-block;
+    cursor: pointer;
+    transition: background 0.6s ease;
+  }
+
+  .active,
+  .section-e .slide-control .dot:hover {
+    background: #717171;
+  }
+
+  .section-f {
+    width: 50%;
+  }
+
+  /*Fading animation*/
+
+  .fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 3s;
+    animation-name: fade;
+    animation-duration: 3s;
+  }
+
+  @-webkit-keyframes fade {
+    from {
+      opacity: .4;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+
+  @keyframes fade {
+    from {
+      opacity: .4;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  /*section f*/
+
+  .sect-f-btn {
+    padding: 10px;
+    background: rgb(35, 35, 153);
+    border: none;
+    color: #ffffff;
+    font-size: 0.5rem;
+  }
+
+  .div-btn {
+
+    text-align: center;
+    margin-bottom: 10px;
+  }
+
+  .section-f p {
+    margin-bottom: -20px;
+  }
+
+  .fa-play {
+    margin-right: 1em;
+  }
+</style>
+
+<body>
+  <div class="overlay" id="overlay">
+
+
+    <div class="main-menu">
+      <a href="index.html">Premium</a>
+      <a href="Help.html">Help</a>
+      <a href="Download.html">Download</a>
+      <div id="dash">
+        <label class="dash-line"><span class="dash"></span></label>
+      </div>
+      <a class="small" href="index.html">Sign Up</a>
+      <a class="small" href="#">Login In</a>
+      <a class="small" href="#">Spotify</a>
+    </div>
+  </div>
+  <div class="topBar">
+    <i class="fab fa-spotify"></i>
+    <a href="#" class="logo">Spotify</a>
+    <input type="checkbox" id="menu-btn" class="menu-btn">
+    <label for="menu-btn" class="icon"><span id="menu-icon" class="menu-icon"></span></label>
+  </div>
+  <div class="container">
+    <div class="showcase">
+
+      <img class="showcase-bg-img">
+      <div class="showcase-wrap">
+        <h3>How can we help you?</h3>
+        <input type="text" id="search" placeholder="Search">
+        <label for="search"></label>
+        <ul>
+          <li> TOP SOLUTIONS</li>
+          <li> <a href="#">Finding accounts</a> </li>
+          <li><a href="#">Problems logging in</a></li>
+          <li><a href="#">Reset your password</a></li>
+          <li><a href="#">Premium for family</a></li>
+        </ul>
+      </div>
+    </div>
+    <!--<a href="#" class="scroll-down" address = "true"></a>-->
+    <!--section-b-->
+    <div class="section-b">
+      <div class="box">
+        <h5>Listen Everywhere</h5>
+        <a href="#">Mobile, Tablet, Desktop</a>
+        <a href="#">Speakers</a>
+        <a href="#">TVs</a>
+        <a href="#">Cars</a>
+        <a href="#">Games Consoles</a>
+        <a href="#">SHOW ALL</a>
+
+      </div>
+      <div class="box">
+        <h5>Account & Payment</h5>
+        <a href="#">Account Basics</a>
+        <a href="#">Account Help</a>
+        <a href="#">Subscription Information</a>
+
+        <a href="#">Payment Help</a>
+        <a href="#">Premium for <i class="fa fa-simplybuilt" aria-hidden="true"></i></a>
+        <a href="#">SHOW ALL</a>
+
+      </div>
+      <div class="box">
+        <h5>Using Spotify</h5>
+        <a href="#">Video Tutorial</a>
+        <a href="#">The Basics</a>
+
+        <a href="#">Playlists</a>
+        <a href="#">Features</a>
+        <a href="#">Discover Music</a>
+        <a class="uppercase" href="#">SHOW ALL</a>
+      </div>
+    </div>
+    <div class="section-c1">
+      <h1>Visit the Community</h1>
+      <p>Have questions? Find answers from our worldwide Community of experts fans!</p>
+      <p>1359 members online right now.</p>
+      <button>FIND ANSWERS</button>
+    </div>
+    <!--section-d-->
+    <div class="section-d">
+      <h2>How to use the feature</h2>
+      <div class="section-d-grid">
+        <div class="section-d-a">
+          <p>GET STARTED</p>
+          <hr>
+          <div class="min-card">
+            <h5>Search</h5>
+            <p>Search a song, album, artist, label, genre,
+              mood, activity, or friend on Spotidy.
+            </p>
+            <h4> <a href="#">READ MORE</a> </h4>
+          </div>
+
+          <div class="min-card">
+            <h5>Playlists</h5>
+            <p>Playlists are like mixtapes you create on spotify.
+              You can share them, subscribe to them, and collaborate on fa-themeisle
+              with your friends.
+            </p>
+            <h4> <a href="#">READ MORE</a></h4>
+          </div>
+
+          <div class="min-card">
+            <h5>Listen Offline</h5>
+            <p>Play music anywhere, even without internet!
+              For Premium subscription only.
+            </p>
+            <h4> <a href="#">READ MORE</a> </h4>
+          </div>
+
+
+
+          <div class="min-card">
+
+          </div>
+
+        </div>
+        <div class="section-d-b">
+          <P>AND CHECK THIS OUT</P>
+          <hr>
+          <div class="min-card">
+            <h5>Radio</h5>
+            <p>Tune into one of our many stations or fa-creative-commons
+              one based on your favorite artist, album, or song.
+            </p>
+            <h4> <a href="#">READ MORE</a></h4>
+          </div>
+          <div class="min-card">
+            <h5>Discover Weekly</h5>
+            <p>Wonder how you'll find new music?
+              Every week Spotify builds a Playlistsfor you of tracks based on your taste
+              but that you may have never heard before!
+
+            </p>
+            <h4> <a href="#">READ MORE</a></h4>
+          </div>
+          <div class="min-card">
+            <h5>Spotify on Chromecast</h5>
+            <p>Play Spotify on your other favorite service: Chromecast
+            </p>
+            <h4><a href="#">READ MORE</a></h4>
+          </div>
+          <div class="min-card">
+            <h5>Share</h5>
+            <p>Share music with friends and find out what they're listening to.
+            </p>
+            <h4><a href="#">READ MORE</a></h4>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!--section-e-->
+    <div class="section-e">
+      <div class="card-slide fade">
+        <h1>Listen Offline</h1>
+        <p>How to make your music with you in your car, on plane
+          or wherever you may not be able to access the internet.
+        </p>
+        <button class="watch-video"><i class="fas fa-play"></i>WATCH VIDEO</button>
+      </div>
+
+      <div class="card-slide fade">
+        <h1>Spotify Connect</h1>
+        <p>Play Spotify on your speaker sound system, or TV with
+          Spotify Connect. Here's how
+        </p>
+        <button class="watch-video"><i class="fas fa-play"></i>WATCH VIDEO</button>
+      </div>
+
+      <div class="card-slide fade">
+        <h1> Spotify on Chromecast</h1>
+        <p>Spotify on your Chromecast? You hear us, right?
+          Here's how to team them up!
+        </p>
+
+        <button class="watch-video"><i class="fas fa-play"></i>WATCH VIDEO</button>
+      </div>
+
+      <div class="card-slide fade">
+        <h1>Make a Playlist</h1>
+        <p>Playlists are your personal mixtapes that you can share or
+          collaborate with friends. Here's how to get started.
+        </p>
+        <button class="watch-video"><i class="fas fa-play"></i>WATCH VIDEO</button>
+      </div>
+
+      <div class="card-slide fade">
+        <h1>Search</h1>
+        <p>Search is key to Spotify's vast library of music, whether you're
+          looking for a particular artist, album, or song; or if you want Spotify
+          to find music to match a mood, or activity, or time of day.
+        </p>
+        <button class="watch-video"><i class="fas fa-play"></i>WATCH VIDEO</button>
+      </div>
+      <div id="slide-control" class="slide-control">
+        <button id="prevBtn" class="prev slide-btn">&#10094;</button>
+        <span id="dot" class="dot" onclick="currentSlide(1)"></span>
+        <span id="dot" class="dot" onclick="currentSlide(2)"></span>
+        <span id="dot" class="dot" onclick="currentSlide(3)"></span>
+        <span id="dot" class="dot" onclick="currentSlide(4)"></span>
+        <span id="dot" class="dot" onclick="currentSlide(5)"></span>
+        <button id="nextBtn" class="next slide-btn">&#10095;</button>
+      </div>
+    </div>
+    <!--section-f  -->
+    <div class="section-f">
+      <h1>Still not on Spotify?</h1>
+      <p>Over 30 million tracks; thousands of curated playlists; Discover Weekly;
+        Spotify Running; Radio; Chromecast, sound system, car, TV, and PlayStation intergration;
+        sharing and creating playlists with your friends... All of this is ready for you.</p>
+
+    </div>
+
+    <div class="div-btn"><button class="sect-f-btn">GET SPOTIFY</button></div>
+
+    <!--section-c-->
+    <div class="section-c">
+      <i class="fab fa-spotify"></i>
+      <div class="section-c-logo">
+        <a href="#" class="logo">Spotify</a>
+      </div>
+      <div class="section-c-grid">
+        <div class="company">
+
+          <h5>COMPANY</h5>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Jobs</a></li>
+            <li><a href="#">For the Record</a></li>
+          </ul>
+        </div>
+        <div class="communities">
+          <h5>COMMUNITIES</h5>
+          <ul>
+            <li><a href="#">For Artists</a></li>
+            <li><a href="#">Developers</a></li>
+            <li><a href="#">Brands</a></li>
+            <li><a href="#">Investors</a></li>
+            <li><a href="#">Vendors</a></li>
+          </ul>
+        </div>
+        <div style="margin-top: -1em;" class="links">
+          <ul>
+            <h5 style="margin-bottom: 1em; margin-left: 9px;">USEFUL LINKS</h5>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Web Player</a></li>
+            <li><a href="#">Free Mobile App</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      window.addEventListener("load", function () {
+        var overlay = document.getElementById("menu-btn");
+        var close = document.getElementById("close");
+        overlay.addEventListener("click", openMenu);
+        //close.addEventListener("click", closeMenu);
+        function openMenu(e) {
+          if (overlay.checked != false) {
+            //  console.log("checked");
+            document.getElementById("overlay").style.width = "100%";
+          }
+          else {
+            document.getElementById("overlay").style.width = "0px";
+          }
+
+        }
+
+
+        let prevBtn = document.getElementById("prevBtn"),
+          nextBtn = document.getElementById("nextBtn"),
+          slides = document.getElementsByClassName("card-slide fade"),
+          dot = document.getElementById("dot");
+
+
+        let slideIndex = 0;
+
+        function showSlide() {
+          let i;
+
+          for (i = 0; i < slides.length; i++) {
+
+            slides[ i ].style.display = "none";
+          }
+          if (slideIndex < slides.length - 1) {
+            slideIndex++;
+          }
+
+          else {
+            slideIndex = 0;
+          }
+          slides[ slideIndex ].style.display = "block";
+          //slides[ slideIndex ].style.width = "100%";
+          //dot[slideIndex].style.backgroundColor = "#000";
+
+          setTimeout(showSlide, 5000);
+        }
+        window.onload = showSlide();
+
+        $(function () {
+          $(".scroll-down").click(function () {
+            $("html, body").animate({
+              scrollTop: $
+                ("section-b").offset().top
+            },
+              "slow")
+            return false;
+          });
+        });
+
+      });
+
+    </script>
+
+</body>
+
+</html>

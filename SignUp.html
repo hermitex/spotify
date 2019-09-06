@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="Front-End Assets/css/all.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up</title>
+
+    <style>
+        select:required:invalid{
+            color: gray;
+        }
+        option[value=""][disabled]{
+            display: none;
+        }
+         option{
+            color: #000000;
+        }
+       
+    </style>
+
+</head>
+<body>
+    <form action="">
+       
+    <a href="#" class="logo">Spotify</a>
+    <hr>
+    <div>
+    <input type="button" value="SIGN UP WITH FACEBOOK">
+    <div>
+    <span class="left">or</span>        
+    <span class="right"></span>
+    </div>
+    <h5>Sign up with your email address</h5>
+    </div>
+<div class="email">
+    <label for="mail"></label>
+    <input type="email" id="mail" placeholder="Email">
+</div>
+
+<div class="confirmMail">
+    <label for="confirmMail"></label>
+    <input type="email" id="confirmMail" placeholder="Confirm email">
+</div>
+
+<div class="pass">
+    <label for="pass"></label>
+    <input type="password" id="pass" placeholder="Password">
+</div>
+
+<div class="name">
+    <label for="name"></label>
+    <input type="text" id="name" placeholder="What should we call you?">
+</div>
+
+<div class="birthDay">
+    <p>Date of birth</p>
+    <select name="Month" required>
+      <option value="" disabled selected hidden >Month</option>
+      <option value="January" id="month">January</option>
+      <option value="February" id="month">February</option>
+      <option value="March" id="month">March</option>
+      <option value="April" id="month">April</option>
+      <option value="May" id="month">May</option>
+      <option value="June" id="month">June</option>
+      <option value="July" id="month">July</option>
+      <option value="August" id="month">August</option>
+      <option value="September" id="month">September</option>
+      <option value="October" id="month">October</option>
+      <option value="November" id="month">November</option>
+      <option value="December" id="month">December</option>
+    </select>
+
+    <i class="fab fa-spotify"></i>
+    <label for="Day"></label>
+    <input type="day" id="Day" placeholder="Day">
+    <label for="year"></label>
+    <input type="year" id="year" placeholder="Year">
+</div>
+
+<div class="gender">
+    
+    <label">
+    <input type="radio" name="gender" value="male">Male
+    </label>
+
+    <label >
+    <input type="radio" name="gender" value="female">Female
+    </label>
+
+    <label>
+    <input type="radio" name="gender" value="non-binary"> Non-binary
+    </label>
+   
+</div>
+
+    </form>
+</body>
+</html>

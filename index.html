@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/bcbb5e63ec.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Spotify</title>
+</head>
+<style>
+  * {
+    box-sizing: border-box;
+    padding: 0px;
+    margin: 0px;
+  }
+
+  body {
+    font-family: Arial, Helvetica, sans-serif;
+    max-width: auto;
+
+  }
+
+  .topBar {
+    width: 100%;
+    background: #000000;
+    height: 8vh;
+    z-index: 3;
+  }
+
+  .logo {
+    display: inline-block;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 10px;
+    padding-left: 0px;
+    margin-left: 0px;
+    padding-left: 0px;
+    text-align: center;
+
+  }
+
+  .dash {
+    position: relative;
+    background: #ffffff;
+    height: 2px;
+    width: 18px;
+    float: left;
+
+  }
+
+
+  #dash {
+
+
+    padding: 10px;
+
+  }
+
+  .overlay {
+    position: fixed;
+    height: 100%;
+    right: 0px;
+    top: 0px;
+    overflow-x: hidden;
+    background: #000000;
+    width: 0px;
+    z-index: 3;
+    transition: width .3s ease-in-out;
+  }
+
+  .main-menu a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 1.5rem;
+  }
+
+  .main-menu a:hover {
+    color: hsl(147, 97%, 47%);
+  }
+
+  #Open {
+    float: right;
+  }
+
+  #close {
+    float: right;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 10px;
+    font-size: 1.5rem;
+    color: #ffffff;
+    padding: 20px;
+  }
+
+  .icon {
+    padding: 20px;
+    float: right;
+    cursor: pointer;
+    z-index: 5;
+    margin-right: 6em
+  }
+
+  .icon .menu-icon {
+    height: 2px;
+    width: 18px;
+    background: #ffffff;
+    float: right;
+    position: relative;
+    z-index: 5;
+    transition: background .2s ease-in-out;
+
+
+  }
+
+  .icon .menu-icon::before {
+    height: 2px;
+    content: " ";
+    width: 18px;
+    background: #ffffff;
+    float: right;
+    position: absolute;
+    top: 5px;
+    transition: all .2s ease-in-out;
+
+  }
+
+  .icon .menu-icon::after {
+    height: 2px;
+    content: " ";
+    width: 18px;
+    background: #ffffff;
+    float: right;
+    position: absolute;
+    top: -5px;
+    transition: all .2s ease-in-out;
+  }
+
+  #menu-btn {
+    display: none;
+  }
+
+  #menu-btn:checked~.icon #menu-icon {
+    background: transparent;
+  }
+
+  #menu-btn:checked~.icon #menu-icon::before {
+    transform: rotate(45deg);
+    top: 0px;
+  }
+
+  #menu-btn:checked~.icon #menu-icon::after {
+    transform: rotate(-45deg);
+    top: 0px;
+  }
+
+  .overlay .main-menu .small {
+    font-weight: normal;
+    font-size: 1rem;
+
+  }
+
+  .container {
+    position: relative;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+
+  .showcase {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    color: #ffffff;
+    margin-bottom: 15em;
+
+  }
+
+  .showcase-wrap {
+    padding: 30px;
+    padding-top: 70px;
+  }
+
+  .showcase .showcase-bg-img {
+    background-image: -webkit-linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url(https://res.cloudinary.com/hng-pre-internship/image/upload/v1567738276/spotify/device-earphones-electronics-583842_zjpyo6.jpg);
+    position: absolute;
+
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 500px;
+
+    z-index: -5;
+  }
+
+  .showcase .showcase-p1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 2rem;
+  }
+
+  .showcase p {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
+
+  .showcase .showcase-form {
+    display: block;
+    margin: 0 auto;
+    color: #ffffff;
+    text-align: center;
+
+  }
+
+  .showcase a {
+    display: block;
+    color: #ffffff;
+    padding-top: 20px;
+
+  }
+
+  .showcase #submit-btn {
+    background: hsl(147, 97%, 47%);
+    border-radius: 30px 30px 30px 30px;
+    width: 7em;
+    padding: 5px 0px;
+    border-style: none;
+    cursor: pointer;
+  }
+
+  .showcase #submit-btn:hover {
+    background: rgb(78, 241, 78);
+  }
+
+  .showcase input {
+    padding: 5px 0px;
+  }
+
+  /*section-a*/
+  .section-a {
+    margin: auto;
+    text-align: center;
+    font-weight: bold;
+    padding: 10px 20px;
+    line-height: 1.5em;
+  }
+
+  .section-b {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 15px;
+    text-align: center;
+    padding: 30px 50px;
+
+  }
+
+  h5 {
+    padding: 10px;
+  }
+
+  .section-b img {
+    height: auto;
+    width: 100%;
+
+  }
+
+  /*section-c*/
+  .section-c {
+
+    background: #000000;
+    color: #ffffff;
+    width: 100%;
+
+  }
+
+  .section-c-grid {
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 15px;
+    justify-content: left;
+  }
+
+  .section-c ul {
+    display: absolute;
+    width: 100%;
+    padding-left: 0px;
+    list-style: none;
+    margin: 20px;
+
+
+
+
+  }
+
+  .section-c ul a {
+    display: block;
+    color: #ffffff;
+    text-decoration: none;
+    padding: 10px;
+  }
+
+  .section-c ul a:hover {
+    color: rgb(0, 255, 0);
+  }
+
+  .section-c-logo {
+    display: block;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 1.2rem;
+    padding: 10px;
+    margin-left: 10px;
+
+  }
+
+  .section-c-grid h5 {
+    margin-left: 20px;
+    color: #ccccbb83;
+    width: 100%;
+
+  }
+
+  .fa-spotify {
+    color: #fff;
+    font-size: 1.5rem;
+    padding: 10px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 0px;
+    display: inline-block;
+    margin-bottom: 2px;
+    margin-left: 4.5em
+  }
+</style>
+
+<body>
+
+  <div class="overlay" id="overlay">
+
+
+    <div class="main-menu">
+      <a href="index.html">Premium</a>
+      <a href="Help.html">Help</a>
+      <a href="Download.html">Download</a>
+      <div id="dash">
+        <label class="dash-line"><span class="dash"></span></label>
+      </div>
+      <a class="small" href="#">Sign Up</a>
+      <a class="small" href="#">Login In</a>
+      <a class="small" href="#">Spotify</a>
+    </div>
+  </div>
+  <div class="topBar">
+    <i class="fab fa-spotify"></i>
+    <a href="#" class="logo">Spotify</a>
+    <input type="checkbox" id="menu-btn" class="menu-btn">
+    <label for="menu-btn" class="icon"><span id="menu-icon" class="menu-icon"></span></label>
+  </div>
+
+  <div class="container">
+    <!--Show-case-->
+
+    <div class="showcase">
+
+      <img class="showcase-bg-img">
+      <div class="showcase-wrap">
+        <p class="showcase-p1">
+          Spotify is currently not available in your country
+        </p>
+        <p class="showcase-p2">
+
+          Be the first to know when we launch
+        </p>
+        <form class="showcase-form">
+          <input type="email" id="mail" placeholder="Email address">
+          <label for="mail"></label>
+          <input type="submit" id="submit-btn" value="Sign Up">
+          <div>
+            <a href="#" id="showcase-link">Sign up with Facebook</a>
+          </div>
+
+        </form>
+      </div>
+    </div>
+    <!--Section-a-->
+    <div class="section-a">
+
+      <p class="section-a-p1">
+        Spotify gives you instant access to millions of songs-from old favorites to the latest
+        hits. Just hit play to stream anything you like.
+      </p>
+    </div>
+    <!--section-b-->
+    <div class="section-b">
+      <div class="card-1">
+        <img
+          src="https://res.cloudinary.com/hng-pre-internship/image/upload/v1567738272/spotify/premium-img1_qnzcx4.jpg"
+          alt="couple" class="card-img">
+        <h5>Listen everywhere</h5>
+        <p class="card-p">
+          Spotify works on your computer, mobile, tablet and TV
+        </p>
+      </div>
+      <div class="card-2">
+        <img
+          src="https://res.cloudinary.com/hng-pre-internship/image/upload/v1567738272/spotify/premium-img2_xoztwq.jpg"
+          alt="man on a couch looking at his phone" class="card-img">
+        <h5>Unlimited, ad-free music</h5>
+        <p class="card-p">
+          No ads. No interruptions. Just music.
+        </p>
+      </div>
+      <div class="card-3">
+        <img
+          src="https://res.cloudinary.com/hng-pre-internship/image/upload/v1567738272/spotify/premium-img3_zgyu1m.jpg"
+          alt="a girl on a fence looking at her phone" class="card-img">
+        <h5>Download music & listen offline</h5>
+        <p class="card-p">
+          Keep playing, even when you don't have a connection
+        </p>
+      </div>
+      <div class="card-4">
+        <img
+          src="https://res.cloudinary.com/hng-pre-internship/image/upload/v1567738272/spotify/premium-img4_zgmk0x.jpg"
+          alt="A man playing a mouth instrument" class="card-img">
+        <h5>Premium sounds better</h5>
+        <p class="card-p">
+          Get ready for incredible sound quality
+        </p>
+      </div>
+    </div>
+    <!--section-c-->
+    <div class="section-c">
+      <div class="section-c-logo">
+        <i class="fab fa-spotify"></i>
+        <a href="#" class="logo">Spotify</a>
+      </div>
+      <div class="section-c-grid">
+        <div class="company">
+
+          <h5>COMPANY</h5>
+          <ul>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Jobs</a></li>
+            <li><a href="#">For the Record</a></li>
+          </ul>
+        </div>
+        <div class="communities">
+          <h5>COMMUNITIES</h5>
+          <ul>
+            <li><a href="#">For Artists</a></li>
+            <li><a href="#">Developers</a></li>
+            <li><a href="#">Brands</a></li>
+            <li><a href="#">Investors</a></li>
+            <li><a href="#">Vendors</a></li>
+          </ul>
+        </div>
+        <div style="margin-top: -1em;" class="links">
+          <ul>
+            <h5 style="margin-bottom: 1em; margin-left: 0px;">USEFUL LINKS</h5>
+            <li><a href="#">Help</a></li>
+            <li><a href="#">Web Player</a></li>
+            <li><a href="#">Free Mobile App</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <script>
+      window.addEventListener("load", function () {
+
+        var overlay = document.getElementById("menu-btn");
+        var close = document.getElementById("close");
+        overlay.addEventListener("click", openMenu);
+        //close.addEventListener("click", closeMenu);
+        function openMenu(e) {
+          if (overlay.checked != false) {
+            //  console.log("checked");
+            document.getElementById("overlay").style.width = "100%";
+          }
+          else {
+            document.getElementById("overlay").style.width = "0px";
+          }
+
+        }
+
+
+      });
+    </script>
+</body>
+
+</html>
